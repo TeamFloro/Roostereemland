@@ -1,9 +1,16 @@
 package nl.floro.roostereemland;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.apache.http.Header;
+
+import nl.floro.roostereemland.api.RoostereemlandApiClient;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,6 +19,24 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+//        51/c/c00012.htm
+        RoostereemlandApiClient.get("51/c/c00012.htm", null, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                TextView textView = (TextView) findViewById(R.id.content);
+                textView.setText(new String(responseBody));
+                System.out.println(new String(responseBody));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+
+
     }
 
 
