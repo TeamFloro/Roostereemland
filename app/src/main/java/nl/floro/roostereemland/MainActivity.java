@@ -31,6 +31,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         /*
         * Hardcoded strings... -_-
         *
@@ -47,12 +49,6 @@ public class MainActivity extends ActionBarActivity {
         * Maaarrr.. als jij een hashmap wil maken ;p
         *
         */
-        Klassen.add("-");
-        Klassen.add("eg1a");
-        Klassen.add("ehv1b");
-        Klassen.add("ehv1c");
-        Klassen.add("ehv1d");
-        Klassen.add("ehv1e");
 
 
 //        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
