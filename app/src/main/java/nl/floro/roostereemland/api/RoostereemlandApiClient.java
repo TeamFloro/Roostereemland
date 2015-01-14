@@ -8,11 +8,14 @@ import com.loopj.android.http.RequestParams;
  * Created by robert-jan on 14-12-14.
  */
 public class RoostereemlandApiClient {
-    private static final String BASE_URL = "http://www.roostereemland.nl/2edagrooster/";
+    private static final String BASE_URL = "http://www.roostereemland.nl/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    public static void get(String url, boolean rooster, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        if (rooster) {
+            client.get(getAbsoluteUrl(url + "2edagrooster/"), params, responseHandler);
+        }
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
