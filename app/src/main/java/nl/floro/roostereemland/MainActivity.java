@@ -90,7 +90,6 @@ public class MainActivity extends ActionBarActivity {
         return week;
     }
 
-    //DIT IS EEN TEST METHOD OM TE KIJKEN OF JSOUP WERKT edit: dit werkt niet omdat ie in een asynctask moet gedaan worden
     public void getRoosterMededelingen() {
         final TextView title = new TextView(getApplicationContext());
         final TextView rooster = new TextView(getApplicationContext());
@@ -165,6 +164,7 @@ public class MainActivity extends ActionBarActivity {
         RoostereemlandApiClient.get(getWeek() + partURL + (klasPositie + 1) + ".htm", true, null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 /*
                 * Documentatie voor flo xD.
                 *
@@ -178,6 +178,8 @@ public class MainActivity extends ActionBarActivity {
                 *
                 * */
                 Document roosterDoc = Jsoup.parse(new String(responseBody));
+
+                Element link = roosterDoc.select("center").first();
 
                 title.setTextColor(Color.BLACK);
                 title.setGravity(Gravity.CENTER);
