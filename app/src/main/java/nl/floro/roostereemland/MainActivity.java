@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -94,6 +95,7 @@ public class MainActivity extends ActionBarActivity {
         final TextView title = new TextView(getApplicationContext());
         final TextView rooster = new TextView(getApplicationContext());
 
+        roosterLayout.removeAllViewsInLayout();
         RoostereemlandApiClient.get("", false, null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -136,7 +138,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
-//hoi
     /*
     * 51/c/c00012.htm
     * 51/c/c00002.htm
@@ -146,8 +147,8 @@ public class MainActivity extends ActionBarActivity {
     * Ik wil dit niet fixen met een slordige if else of een case... F: Jammer joh, DONE
     */
     public void getRooster(int klasPositie) {
-        final TextView title = new TextView(getApplicationContext());
-        final TextView rooster = new TextView(getApplicationContext());
+        final WebView webview = new WebView(getApplicationContext());
+//        final TextView rooster = new TextView(getApplicationContext());
 
         String partURL = "/c/c0000";
         if (klasPositie == 0) {
@@ -163,36 +164,8 @@ public class MainActivity extends ActionBarActivity {
         RoostereemlandApiClient.get(getWeek() + partURL + klasPositie + ".htm", true, null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                webview.loadData(responseBody.toString(), "text/html", null);
 
-                /*
-                * Documentatie voor flo xD.
-                *
-                * Maak van de byte[] een String doormiddel van:
-                * new String(byte[]);
-                *
-                * Omdat we weten dat Jsoup gebruik kan maken van een String met de HTML code van een site
-                * kunnen we die String in de functie Jsoup.parse() zetten.
-                *
-                * Als we dit dan vervolgens opslaan als een Document doc variabelen kunnen we er mee doen wat we willen.
-                *
-                * */
-                Document roosterDoc = Jsoup.parse(new String(responseBody));
-                Element link = roosterDoc.select("tbody").first();
-
-                title.setTextColor(Color.BLACK);
-                title.setGravity(Gravity.CENTER);
-                title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 38);
-                title.setText(roosterDoc.select("font[size=4]").text());
-
-
-                rooster.setTextColor(Color.BLACK);
-                rooster.setGravity(Gravity.CENTER);
-                rooster.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-                rooster.setText(Html.fromHtml(link.toString()));
-
-                System.out.println(roosterDoc.select("table").first().text());
-                roosterLayout.addView(title);
-                roosterLayout.addView(rooster);
             }
 
             @Override
