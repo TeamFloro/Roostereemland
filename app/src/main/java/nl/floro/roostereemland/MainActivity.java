@@ -1,9 +1,13 @@
 package nl.floro.roostereemland;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -11,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -20,6 +26,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -46,6 +53,7 @@ public class MainActivity extends ActionBarActivity {
     static final ArrayList<String> Docenten = new ArrayList<>();
     static final ArrayList<String> Lokalen = new ArrayList<>();
     static final Calendar kalender = new GregorianCalendar();
+    private ProgressDialog progressBar;
     LinearLayout roosterLayout;
 
 
@@ -159,24 +167,44 @@ public class MainActivity extends ActionBarActivity {
             partURL = "/c/c000";
         }
 
-        // Leeg het layout omdat hij er anders steeds een view achter zet.
         roosterLayout.removeAllViewsInLayout();
-        RoostereemlandApiClient.get(getWeek() + partURL + klasPositie + ".htm", true, null, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                webview.loadData(responseBody.toString(), "text/html", null);
 
+        WebSettings settings = webview.getSettings();
+        settings.setJavaScriptEnabled(true);
+        webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+
+        progressBar = ProgressDialog.show(MainActivity.this, "WebView Example", "Loading...");
+
+        webview.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
             }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                System.out.println(new String(responseBody));
+            public void onPageFinished(WebView view, String url) {
+                if (progressBar.isShowing()) {
+                    progressBar.dismiss();
+                }
+            }
+
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Toast.makeText(getApplicationContext(), "Oh no! " + description, Toast.LENGTH_SHORT).show();
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage(description);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+                alertDialog.show();
             }
         });
-
-
+        webview.loadUrl("http://www.roostereemland.nl/");
     }
 
+    // Leeg het layout omdat hij er anders steeds een view achter zet.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
