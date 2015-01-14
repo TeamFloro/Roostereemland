@@ -15,6 +15,13 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
 
+//Dit is de shit voor Jsoup alleen dat is nu dus nog niet gebruikt want het werkt nog niet
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -33,30 +40,12 @@ public class MainActivity extends ActionBarActivity {
     static final Calendar kalender = new GregorianCalendar();
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-        /*
-        * Hardcoded strings... -_-
-        *
-        * Floris implement hashmaps hier aub XD.
-        * Key, Value
-        * "Klas1", "c000012.htm"
-        *
-        * Met als uitzondering, "-"
-        * Dit is de Homepage.
-        *
-        *
-        * EDIT:
-        * Hoeft niet, we kunnen een Array gebruiken en dan de position van de klasnaam gebruiken...
-        * Maaarrr.. als jij een hashmap wil maken ;p
-        *
-        */
-
 
         Klassen.addAll(Arrays.asList("eg1a", "ehv1bCE", "ehv1cCE", "ehv1d", "ehv1e", "ehv1fSp", "emh1g", "emh1h", "emh1iSp", "eg2a", "eg2b", "ehv2cCE", "ehv2d", "ehv2e", "ehv2f", "ehv2g", "ehv2h", "em2a", "em2b", "em2cSp", "eg3aiP", "eg3b", "ev3c", "ev3d", "ev3eSp", "eh3a", "eh3b", "eh3c", "eh3d", "eh3eSp", "em3a", "em3b", "em3c", "evg4a", "evg4b", "evg4c", "eh4a", "eh4b", "eh4c", "eh4d", "em4a", "em4b", "em4c", "evg5a", "evg5b", "evg5c", "eh5a", "eh5b", "eh5c", "eh5d", "evg6a", "evg6b"));
         Docenten.addAll(Arrays.asList("Akn", "Ama", "Ate", "Bbw", "Bdw", "Bke", "Blb", "Bne", "Bpd", "Bre", "Brn", "Brs", "Brw", "Bss", "Bvg", "Bzd", "Ccg", "Ctn", "Dhg", "Dkb", "Dma", "Dmn", "Dnt", "Egl", "Enn", "Esf", "Faw", "Fns", "Fsf", "Ggw", "Gns", "Grb", "Grk", "Gsg", "Gtf", "Hah", "Hdb", "Heb", "Hgd", "Hge", "Hke", "Hld", "Hmd", "Hpa", "Hpe", "Hse", "Hte", "Hwg", "Hwi", "Jnn", "Joe", "Jot", "Jsl", "Khd", "Kld", "Klm", "Kom", "Krf", "Kru", "Kte", "Ktn", "Kvw", "Leg", "Lhw", "Lmw", "Lrb", "Mdg", "Mdn", "Mes", "Mhf", "Mlf", "Mnn", "Mrl", "Nvm", "Obe", "Olm", "Osn", "Osw", "Pif", "Pjs", "Pre", "Ptd", "Rcs", "Rif", "Rig", "Rlw", "Rml", "Rui", "Rvm", "Sbt", "Sch", "Sgn", "Shd", "Sis", "Skt", "Srn", "Sta", "Swn", "Ten", "Tmn", "Tmw", "Vds", "Vec", "Ves", "Vew", "Vhk", "Viw", "Vkb", "Vkn", "Vnl", "Vrt", "Vsk", "Wbe", "Wma", "Wmg", "Wms"));
@@ -98,6 +87,36 @@ public class MainActivity extends ActionBarActivity {
         return week;
     }
 
+//DIT IS EEN TEST METHOD OM TE KIJKEN OF JSOUP WERKT edit: dit werkt niet omdat ie in een asynctask moet gedaan worden
+//    public void getRoosterMededelingen() {
+//
+//
+//        Document doc;
+//        try {
+//
+//            // need http protocol
+//            doc = Jsoup.connect("http://google.com").get();
+//
+//            // get page title
+//            String title = doc.title();
+//            System.out.println("title : " + title);
+//
+//            // get all links
+//            Elements links = doc.select("a[href]");
+//            for (Element link : links) {
+//
+//                // get the value from href attribute
+//                System.out.println("\nlink : " + link.attr("href"));
+//                System.out.println("text : " + link.text());
+//
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
 
     public void getRooster(int klasPositie) {
         /*
@@ -114,6 +133,7 @@ public class MainActivity extends ActionBarActivity {
         if (klasPositie >=10) {
             partURL =  "/c/c000";
         }
+
 
 
 
