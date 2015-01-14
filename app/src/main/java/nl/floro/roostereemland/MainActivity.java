@@ -87,7 +87,7 @@ public class MainActivity extends ActionBarActivity {
             week = String.format("%02d", kalender.get(Calendar.WEEK_OF_YEAR));
 
         }
-        return week;
+        return week;//
     }
 
     public void getRoosterMededelingen() {
@@ -150,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
         final TextView rooster = new TextView(getApplicationContext());
 
         String partURL = "/c/c0000";
-        if (klasPositie == -1) {
+        if (klasPositie == 0) {
             getRoosterMededelingen();
             return;
         }
@@ -160,7 +160,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Leeg het layout omdat hij er anders steeds een view achter zet.
         roosterLayout.removeAllViewsInLayout();
-        RoostereemlandApiClient.get(getWeek() + partURL + (klasPositie + 1) + ".htm", true, null, new AsyncHttpResponseHandler() {
+        RoostereemlandApiClient.get(getWeek() + partURL + klasPositie + ".htm", true, null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
@@ -177,8 +177,7 @@ public class MainActivity extends ActionBarActivity {
                 *
                 * */
                 Document roosterDoc = Jsoup.parse(new String(responseBody));
-
-                Element link = roosterDoc.select("center").first();
+                Element link = roosterDoc.select("tbody").first();
 
                 title.setTextColor(Color.BLACK);
                 title.setGravity(Gravity.CENTER);
@@ -189,7 +188,7 @@ public class MainActivity extends ActionBarActivity {
                 rooster.setTextColor(Color.BLACK);
                 rooster.setGravity(Gravity.CENTER);
                 rooster.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-                rooster.setText(Html.fromHtml(roosterDoc.select("table").first().toString()));
+                rooster.setText(Html.fromHtml(link.toString()));
 
                 System.out.println(roosterDoc.select("table").first().text());
                 roosterLayout.addView(title);
