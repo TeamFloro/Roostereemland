@@ -14,9 +14,10 @@ public class RoostereemlandApiClient {
 
     public static void get(String url, boolean rooster, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         if (rooster) {
-            client.get(getAbsoluteUrl(url + "2edagrooster/"), params, responseHandler);
+            client.get(getAbsoluteUrl("dagrooster/" + url), params, responseHandler);
+        } else {
+            client.get(getAbsoluteUrl(url), params, responseHandler);
         }
-        client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
@@ -24,6 +25,7 @@ public class RoostereemlandApiClient {
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
+        System.out.println(BASE_URL + relativeUrl);
         return BASE_URL + relativeUrl;
     }
 }
