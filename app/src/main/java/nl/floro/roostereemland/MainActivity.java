@@ -71,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getRooster(position - 1);
+                getRooster(position);
             }
 
             @Override
@@ -99,8 +99,7 @@ public class MainActivity extends ActionBarActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Element roosterDoc = Jsoup.parse(new String(responseBody)).body();
 
-                for (Node node : roosterDoc.childNodes()) // Iterate over all elements in the document
-                {
+                for (Node node : roosterDoc.childNodes()) {
                     if (node.nodeName().equals("#comment")) {
                         if (node.toString().trim().equals("<!-- EINDE OPMERKINGEN-->")) {
                             System.out.println("hallo");
