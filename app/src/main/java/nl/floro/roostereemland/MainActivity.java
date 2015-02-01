@@ -103,32 +103,12 @@ public class MainActivity extends ActionBarActivity {
         RoostereemlandApiClient.get("", false, null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Element roosterDoc = Jsoup.parse(new String(responseBody)).body();
+                Element roosterDoc = Jsoup.parse(new String(responseBody));
 
-                for (Node node : roosterDoc.childNodes()) {
-                    if (node.nodeName().equals("#comment")) {
-                        if (node.toString().trim().equals("<!-- EINDE OPMERKINGEN-->")) {
-                            System.out.println("hallo");
-                        }
-                        // Some output for testing ...
-                        System.out.println("=== Comment =======");
-                        System.out.println(node.toString().trim() + "faggot"); // 'toString().trim()' is only out beautify
-                        System.out.println("=== Childs ========");
-
-
-                        // Get the childs of the comment --> following nodes
-                        final List<Node> childNodes = node.siblingNodes();
-
-                        // Start- and endindex for the sublist - this is used to skip tags before the actual comment node
-                        final int startIdx = node.siblingIndex();   // Start index - start after (!) the comment node
-                        final int endIdx = childNodes.size();       // End index - the last following node
-                    }
-                    // if it's a comment we do something
-                }
 
                 tv.setText(roosterDoc.select("font[size=4]").text());
-
             }
+
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
