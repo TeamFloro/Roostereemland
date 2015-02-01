@@ -5,11 +5,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -112,50 +114,43 @@ public class MainActivity extends ActionBarActivity {
         }
         return week;//
     }
-//
-//    public String getRoosterMededelingen() {
-//
-//        final String[] mededelingen = new String[1];
-//        RoostereemlandApiClient.get("", false, null, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//                Element roosterDoc = Jsoup.parse(new String(responseBody)).body();
-//
-//                for (Node node : roosterDoc.childNodes()) {
-//                    if (node.nodeName().equals("#comment")) {
-//                        if (node.toString().trim().equals("<!-- EINDE OPMERKINGEN-->")) {
-//                            System.out.println("hallo");
-//                        }
-//                        // Some output for testing ...
-//                        System.out.println("=== Comment =======");
-//                        System.out.println(node.toString().trim() + "faggot"); // 'toString().trim()' is only out beautify
-//                        System.out.println("=== Childs ========");
-//
-//
-//                        // Get the childs of the comment --> following nodes
-//                        final List<Node> childNodes = node.siblingNodes();
-//
-//                        // Start- and endindex for the sublist - this is used to skip tags before the actual comment node
-//                        final int startIdx = node.siblingIndex();   // Start index - start after (!) the comment node
-//                        final int endIdx = childNodes.size();       // End index - the last following node
-//                    }
-//                    // if it's a comment we do something
-//                }
-//
-//
-//
-//                ;
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//                System.out.println(new String(responseBody));
-//            }
-//        });
-//
-//        return "";
-//    }
+
+    public String getRoosterMededelingen() {
+
+        final String[] mededelingen = new String[1];
+        RoostereemlandApiClient.get("", false, null, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Element roosterDoc = Jsoup.parse(new String(responseBody)).body();
+
+                for (Node node : roosterDoc.childNodes()) {
+                    if (node.nodeName().equals("#comment")) {
+                        if (node.toString().trim().equals("<!-- EINDE OPMERKINGEN-->")) {
+                            System.out.println("hallo");
+                        }
+                        // Some output for testing ...
+                        System.out.println("=== Comment =======");
+                        System.out.println(node.toString().trim() + "faggot"); // 'toString().trim()' is only out beautify
+                        System.out.println("=== Childs ========");
+
+
+                    }
+                    // if it's a comment we do something
+                }
+
+
+                ;
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                System.out.println(new String(responseBody));
+            }
+        });
+
+        return "";
+    }
     /*
     * 51/c/c00012.htm
     * 51/c/c00002.htm
@@ -190,10 +185,6 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
-
-
-
 /*
 * Todo:
 * - Make rooster work in fragment
