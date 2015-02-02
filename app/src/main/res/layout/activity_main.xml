@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryDark"/>
+        android:background="?attr/colorPrimary"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -26,7 +26,10 @@
         android:layout_height="wrap_content"
         android:text="Mededelingen"
         android:id="@+id/textView1"
-        android:gravity="center" />
+        android:gravity="center"
+        android:autoText="false"
+        android:phoneNumber="false"
+        android:textStyle="bold" />
 
 
     <RelativeLayout
@@ -43,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight=".50"
-
                 android:id="@+id/spinner" />
 
             <Spinner

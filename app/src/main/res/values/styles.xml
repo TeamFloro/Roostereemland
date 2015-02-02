@@ -4,8 +4,10 @@
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorSecondary</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:textColorPrimary">#FFFF</item>
         <item name="windowActionBar">false</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 </resources>
