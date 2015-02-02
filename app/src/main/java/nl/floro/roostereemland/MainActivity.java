@@ -110,7 +110,7 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 if (docentPositie >= 100) {
-                    partURL = "/t/t00"
+                    partURL = "/t/t00";
                 }
 
 
