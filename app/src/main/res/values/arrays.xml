@@ -1,15 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="klassenOpties">
-        <item name="1">Once a day</item>
-        <item name="7">Once a week</item>
-        <item name="3">Once a year</item>
-        <item name="0">Never (Update maually)</item>
+    <string-array name="klassenEntries">
+        <item>eg1a</item>
+        <item>ehv1bCE</item>
+        <item>ehv1cCE</item>
+        <item>ehv1d</item>
+        <item>ehv1e</item>
+        <item>ehv1fSp</item>
+        <item>emh1g</item>
+        <item>emh1h</item>
+        <item>emh1iSp</item>
+        <item>eg2a</item>
+        <item>eg2b</item>
+        <item>ehv2cCE</item>
+        <item>ehv2d</item>
+        <item>ehv2e</item>
+        <item>ehv2f</item>
+        <item>ehv2g</item>
+        <item>ehv2h</item>
+        <item>em2a</item>
+        <item>em2b</item>
+        <item>em2cSp</item>
+        <item>eg3aiP</item>
+        <item>eg3b</item>
+        <item>ev3c</item>
+        <item>ev3d</item>
+        <item>ev3eSp</item>
+        <item>eh3a</item>
+        <item>eh3b</item>
+        <item>eh3c</item>
+        <item>eh3d</item>
+        <item>eh3eSp</item>
+        <item>em3a</item>
+        <item>em3b</item>
+        <item>em3c</item>
+        <item>evg4a</item>
+        <item>evg4b</item>
+        <item>evg4c</item>
+        <item>eh4a</item>
+        <item>eh4b</item>
+        <item>eh4c</item>
+        <item>eh4d</item>
+        <item>em4a</item>
+        <item>em4b</item>
+        <item>em4c</item>
+        <item>evg5a</item>
+        <item>evg5b</item>
+        <item>evg5c</item>
+        <item>eh5a</item>
+        <item>eh5b</item>
+        <item>eh5c</item>
+        <item>eh5d</item>
+        <item>evg6a</item>
+        <item>evg6b</item>
     </string-array>
-    <string-array name="klassenInhoud">
-        <item name="1">1</item>
-        <item name="7">7</item>
-        <item name="30">30</item>
-        <item name="0">0</item>
+
+    <string-array name="klassenValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
     </string-array>
 </resources>

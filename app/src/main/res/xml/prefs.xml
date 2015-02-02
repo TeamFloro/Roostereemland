@@ -5,8 +5,8 @@
         android:summary="Standaard klas selector"
         android:title="Klas info">
         <ListPreference
-            android:entries="@array/klassenOpties"
-            android:entryValues="@array/klassenInhoud"
+            android:entries="@array/klassenEntries"
+            android:entryValues="@array/klassenValues"
             android:key="klas"
             android:summary="Selecteer hier uw klas."
             android:title="Klas" />
