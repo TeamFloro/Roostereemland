@@ -84,7 +84,6 @@ public class MainActivity extends ActionBarActivity {
                 }
 
 
-
                 webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + klasPositie + ".htm");
                 webView.setBackgroundColor(Color.TRANSPARENT);
 
@@ -95,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-
+//docentenshit
         spinnerDocent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -136,6 +135,7 @@ public class MainActivity extends ActionBarActivity {
         }
         return week;
     }
+
     public void getRoosterMededelingen() {
         final TextView mededelingen = (TextView) findViewById(R.id.textView1);
         RoostereemlandApiClient.get("", false, null, new AsyncHttpResponseHandler() {
