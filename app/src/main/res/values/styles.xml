@@ -8,15 +8,23 @@
         <item name="colorPrimaryDark">@color/colorSecondary</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:textColorPrimary">#FFFF</item>
-        <item name="actionMenuTextColor">@color/abc_primary_text_material_light</item>
+        <item name="android:textColorSecondary">#ff752801</item>
         <item name="windowActionBar">false</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
+
     </style>
 
     <style name="AppThemeSettings" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowNoTitle">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorSecondary</item>
+        <item name="colorPrimaryDark">@color/gray</item>
         <item name="windowActionBar">true</item>
+
+
+    </style>
+
+    <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">#000</item>
     </style>
 </resources>

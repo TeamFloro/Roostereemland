@@ -250,6 +250,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (klas != null) {
             spinnerKlas.setSelection(Integer.valueOf(klas));
+
         }
         System.out.println("hij update nu toch?" + klas);
 
