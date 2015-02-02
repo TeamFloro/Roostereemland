@@ -1,17 +1,21 @@
 package nl.floro.roostereemland;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 
-public class Settings extends PreferenceActivity {
+public class Settings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }
 
 
@@ -35,5 +39,20 @@ public class Settings extends PreferenceActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        SharedPreferences.Editor prefEditor = sharedPreferences.edit();
+        switch (key) {
+            case "klas":
+                prefEditor.putString("lastUsed", "klas").apply();
+                System.out.println(key + "is last used");
+                break;
+            case "docent":
+                prefEditor.putString("lastUsed", "docent").apply();
+                System.out.println(key + "is last used");
+                break;
+        }
     }
 }

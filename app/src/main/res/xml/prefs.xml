@@ -13,11 +13,11 @@
             android:title="Klas" />
 
         <ListPreference
-            android:entries="@array/klassenEntries"
-            android:entryValues="@array/klassenValues"
-            android:key="klas"
-            android:summary="Selecteer hier uw klas."
-            android:title="Klas" />
+            android:entries="@array/docentenEntries"
+            android:entryValues="@array/docentenValues"
+            android:key="docent"
+            android:summary="Selecteer hier uw afkorting."
+            android:title="Docent" />
 
     </PreferenceCategory>
 
