@@ -129,7 +129,6 @@ public class MainActivity extends ActionBarActivity {
         }
         return week;
     }
-
     public void getRoosterMededelingen() {
         final TextView mededelingen = (TextView) findViewById(R.id.textView1);
         RoostereemlandApiClient.get("", false, null, new AsyncHttpResponseHandler() {
