@@ -1,6 +1,7 @@
 package nl.floro.roostereemland;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -231,6 +232,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(getApplicationContext(), Settings.class);
+            startActivity(settingsIntent);
             return true;
         }
 

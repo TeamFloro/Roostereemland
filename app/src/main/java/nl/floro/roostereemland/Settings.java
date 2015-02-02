@@ -1,17 +1,17 @@
 package nl.floro.roostereemland;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class Settings extends ActionBarActivity {
+public class Settings extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        addPreferencesFromResource(R.xml.prefs);
     }
 
 
