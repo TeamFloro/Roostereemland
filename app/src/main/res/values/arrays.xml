@@ -56,7 +56,6 @@
     </string-array>
 
     <string-array name="klassenValues">
-        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -109,5 +108,7 @@
         <item>50</item>
         <item>51</item>
         <item>52</item>
+        <item>53</item>
+
     </string-array>
 </resources>
