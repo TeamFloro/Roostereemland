@@ -13,7 +13,7 @@
         <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
-    <style name="AppThemeSettings" parent="Theme.AppCompat.Light">
+    <style name="AppThemeSettings" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
     </style>
