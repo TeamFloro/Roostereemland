@@ -45,8 +45,11 @@ public class MainActivity extends ActionBarActivity {
     private ProgressDialog progressBar;
     static String p;
     SharedPreferences sharedPrefs;
+    String lastUsed;
     String klas;
+    String docent;
     Spinner spinnerKlas;
+    Spinner spinnerDocent;
 
 
     @Override
@@ -56,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
         getRoosterMededelingen();
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Spinner spinnerDocent = (Spinner) findViewById(R.id.spinner1);
+        spinnerDocent = (Spinner) findViewById(R.id.spinner1);
         spinnerKlas = (Spinner) findViewById(R.id.spinner);
         final WebView webView = (WebView) findViewById(R.id.webView);
         AdView adView = (AdView) this.findViewById(R.id.adView);
@@ -66,7 +69,9 @@ public class MainActivity extends ActionBarActivity {
         Klassen.addAll(Arrays.asList("-", "eg1a", "ehv1bCE", "ehv1cCE", "ehv1d", "ehv1e", "ehv1fSp", "emh1g", "emh1h", "emh1iSp", "eg2a", "eg2b", "ehv2cCE", "ehv2d", "ehv2e", "ehv2f", "ehv2g", "ehv2h", "em2a", "em2b", "em2cSp", "eg3aiP", "eg3b", "ev3c", "ev3d", "ev3eSp", "eh3a", "eh3b", "eh3c", "eh3d", "eh3eSp", "em3a", "em3b", "em3c", "evg4a", "evg4b", "evg4c", "eh4a", "eh4b", "eh4c", "eh4d", "em4a", "em4b", "em4c", "evg5a", "evg5b", "evg5c", "eh5a", "eh5b", "eh5c", "eh5d", "evg6a", "evg6b"));
         Docenten.addAll(Arrays.asList("-", "Akn", "Ama", "Ate", "Bbw", "Bdw", "Bke", "Blb", "Bne", "Bpd", "Bre", "Brn", "Brs", "Brw", "Bss", "Bvg", "Bzd", "Ccg", "Ctn", "Dhg", "Dkb", "Dma", "Dmn", "Dnt", "Egl", "Enn", "Esf", "Faw", "Fns", "Fsf", "Ggw", "Gns", "Grb", "Grk", "Gsg", "Gtf", "Hah", "Hdb", "Heb", "Hgd", "Hge", "Hke", "Hld", "Hmd", "Hpa", "Hpe", "Hse", "Hte", "Hwg", "Hwi", "Jnn", "Joe", "Jot", "Jsl", "Khd", "Kld", "Klm", "Kom", "Krf", "Kru", "Kte", "Ktn", "Kvw", "Leg", "Lhw", "Lmw", "Lrb", "Mdg", "Mdn", "Mes", "Mhf", "Mlf", "Mnn", "Mrl", "Nvm", "Obe", "Olm", "Osn", "Osw", "Pif", "Pjs", "Pre", "Ptd", "Rcs", "Rif", "Rig", "Rlw", "Rml", "Rui", "Rvm", "Sbt", "Sch", "Sgn", "Shd", "Sis", "Skt", "Srn", "Sta", "Swn", "Ten", "Tmn", "Tmw", "Vds", "Vec", "Ves", "Vew", "Vhk", "Viw", "Vkb", "Vkn", "Vnl", "Vrt", "Vsk", "Wbe", "Wma", "Wmg", "Wms"));
         Lokalen.addAll(Arrays.asList("000", "005", "006", "007", "024", "034", "035", "036", "037", "103", "104", "116", "117", "118", "119", "122", "123", "124", "126", "127", "128", "129", "130", "202", "203", "204", "205", "208", "210", "215", "216", "217", "218", "219", "221", "222", "224", "225", "227", "228", "303", "304", "307", "309", "310", "311", "313", "401", "402", "403", "N1", "N10", "N2", "N6", "N7", "N8", "N9", "S1", "S2", "StZ", "StZ-", "T1", "T2", "T3", "T4"));
+        lastUsed = sharedPrefs.getString("lastUsed", null);
         klas = sharedPrefs.getString("klas", null);
+        docent = sharedPrefs.getString("docent", null);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -134,11 +139,22 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-
-        if (klas != null) {
-            spinnerKlas.setSelection(Integer.valueOf(klas));
+        if (lastUsed != null) {
+            switch (lastUsed) {
+                case "klas":
+                    if (klas != null) {
+                        spinnerDocent.setSelection(0);
+                        spinnerKlas.setSelection(Integer.valueOf(klas));
+                    }
+                    break;
+                case "docent":
+                    if (docent != null) {
+                        spinnerKlas.setSelection(0);
+                        spinnerDocent.setSelection(Integer.valueOf(docent));
+                    }
+                    break;
+            }
         }
-
     }
 
     public String getWeek() {
@@ -246,14 +262,27 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
+        lastUsed = sharedPrefs.getString("lastUsed", null);
         klas = sharedPrefs.getString("klas", null);
+        docent = sharedPrefs.getString("docent", null);
 
-        if (klas != null) {
-            spinnerKlas.setSelection(Integer.valueOf(klas));
-
+        if (lastUsed != null) {
+            switch (lastUsed) {
+                case "klas":
+                    if (klas != null) {
+                        spinnerDocent.setSelection(0);
+                        spinnerKlas.setSelection(Integer.valueOf(klas));
+                    }
+                    break;
+                case "docent":
+                    if (docent != null) {
+                        spinnerKlas.setSelection(0);
+                        spinnerDocent.setSelection(Integer.valueOf(docent));
+                    }
+                    break;
+            }
+            System.out.println("hij update nu toch?" + klas);
         }
-        System.out.println("hij update nu toch?" + klas);
-
     }
 }
 
