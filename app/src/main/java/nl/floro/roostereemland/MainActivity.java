@@ -98,16 +98,16 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                int klasPositie = position;
-                String partURL = "/c/c0000";
-                if (klasPositie == 0) {
+                int docentPositie = position;
+                String partURL = "/t/t0000";
+                if (docentPositie == 0) {
                     return;
                 }
-                if (position >= 10) {
-                    partURL = "/c/c000";
+                if (docentPositie >= 10) {
+                    partURL = "/t/t000";
                 }
 
-                webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + klasPositie + ".htm");
+                webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + docentPositie + ".htm");
                 webView.setBackgroundColor(Color.TRANSPARENT);
 
             }
