@@ -3,27 +3,20 @@
 
     <PreferenceCategory
         android:summary="Standaard klas selector"
-        android:title="Klas info">
+        android:title="Klas instellingen">
 
         <ListPreference
             android:entries="@array/klassenEntries"
             android:entryValues="@array/klassenValues"
             android:key="klas"
-            android:summary="Selecteer hier uw klas."
-            android:title="Klas" />
-
-        <ListPreference
-            android:entries="@array/klassenEntries"
-            android:entryValues="@array/klassenValues"
-            android:key="klas"
-            android:summary="Selecteer hier uw klas."
+            android:summary="Selecteer hier de klas die u standaard wilt zien als u de app opent."
             android:title="Klas" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:summary="Makers en extra info"
-        android:title="Makers en extra info">
+        android:summary="Makers"
+        android:title="Makers">
         <Preference android:layout="@layout/settings_message" />
     </PreferenceCategory>
 </PreferenceScreen>
