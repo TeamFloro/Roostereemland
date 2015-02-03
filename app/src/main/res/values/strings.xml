@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Rooster</string>
     <string name="action_settings">Instellingen</string>
+    <string name="vernieuw_knop">Vernieuwen</string>
     <string name="title_activity_settings">Instellingen</string>
     <string name="credits_text">Deze app is gemaakt door Robert-Jan Keizer en Floris ten Hacken.</string>
 </resources>
