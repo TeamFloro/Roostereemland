@@ -72,7 +72,6 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
                 break;
         }
     }
-
     public void onClick(View v) {
         counter++;
 
