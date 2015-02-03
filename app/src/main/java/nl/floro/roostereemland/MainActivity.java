@@ -1,19 +1,15 @@
 package nl.floro.roostereemland;
 
-import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,20 +26,12 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.select.Elements;
-import org.w3c.dom.Text;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import nl.floro.roostereemland.api.RoostereemlandApiClient;
 
@@ -56,7 +44,6 @@ public class MainActivity extends ActionBarActivity {
     static final ArrayList<String> Lokalen = new ArrayList<>();
 
     static final Calendar kalender = new GregorianCalendar();
-    private ProgressDialog progressBar;
     static String p;
     static String all;
     SharedPreferences sharedPrefs;
@@ -65,7 +52,6 @@ public class MainActivity extends ActionBarActivity {
     String docent;
     Spinner spinnerKlas;
     Spinner spinnerDocent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +81,7 @@ public class MainActivity extends ActionBarActivity {
         klas = sharedPrefs.getString("klas", null);
         docent = sharedPrefs.getString("docent", null);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        setSupportActionBar(toolbar);
 
 
         adView.loadAd(adRequest);
@@ -113,9 +97,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                int klasPositie = position;
                 String partURL = "/c/c0000";
-                if (klasPositie == 0) {
+                if (position == 0) {
                     return;
                 }
                 if (position >= 10) {
@@ -123,13 +106,13 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 if (isNetworkAvailable()) {
-                    webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + klasPositie + ".htm");
+                    webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + position + ".htm");
                     webView.setBackgroundColor(Color.TRANSPARENT);
                 } else {
                     String HTML = " <html><body><h1>Geen internet gedetecteerd</h1></body</html>";
                     webView.loadData(HTML, "", "UTF-8");
                 }
-
+                spinnerDocent.setSelection(0);
             }
 
             @Override
@@ -142,29 +125,27 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                int docentPositie = position;
                 String partURL = "/t/t0000";
-                if (docentPositie == 0) {
+                if (position == 0) {
                     return;
                 }
-                if (docentPositie >= 10) {
+                if (position >= 10) {
                     partURL = "/t/t000";
                 }
 
-                if (docentPositie >= 100) {
+                if (position >= 100) {
                     partURL = "/t/t00";
                 }
 
 
                 if (isNetworkAvailable()) {
-
-
-                    webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + docentPositie + ".htm");
+                    webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + position + ".htm");
                     webView.setBackgroundColor(Color.TRANSPARENT);
                 } else {
                     String HTML = " <html><body><h1>Geen internet gedetecteerd</h1></body</html>";
                     webView.loadData(HTML, "", "UTF-8");
                 }
+                spinnerKlas.setSelection(0);
             }
 
             @Override
@@ -172,6 +153,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+
         if (lastUsed != null) {
             switch (lastUsed) {
                 case "klas":
@@ -209,29 +191,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Element roosterDoc = Jsoup.parse(new String(responseBody)).body();
-
-                for (Node node : roosterDoc.childNodes()) {
-                    if (node.nodeName().equals("#comment")) {
-                        if (node.toString().trim().equals("<!-- EINDE OPMERKINGEN-->")) {
-                            System.out.println("hallo");
-                        }
-                        // Some output for testing ...
-                        System.out.println("=== Comment =======");
-                        System.out.println(node.toString().trim() + "faggot"); // 'toString().trim()' is only out beautify
-                        System.out.println("=== Childs ========");
-
-
-                        // Get the childs of the comment --> following nodes
-                        final List<Node> childNodes = node.siblingNodes();
-
-                        // Start- and endindex for the sublist - this is used to skip tags before the actual comment node
-                        final int startIdx = node.siblingIndex();   // Start index - start after (!) the comment node
-                        final int endIdx = childNodes.size();       // End index - the last following node
-                    }
-                    // if it's a comment we do something
-                }
-
+                all = roosterDoc.getElementsByAttribute("uze").text();
                 p = roosterDoc.select("font[size=4]").text();
+                laatstGeupdate.setText("L" + all.substring(1));
+
                 if (p.contains("Roosterwijzer")) {
                     char[] d;
                     d = p.toCharArray();
@@ -258,38 +221,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Document doc = null;
-                try {
-                    doc = Jsoup.connect("http://www.roostereemland.nl/index.html").get();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Elements uze = doc.getElementsByAttribute("uze");
-                all = uze.text();
-
-                if (doc != null) {
-                    char[] c;
-                    c = all.toCharArray();
-
-
-                    laatstGeupdate.setText("L" + all.substring(1));
-
-                }
-
-
-            }
-
-        }
-
-
-        );
-
-        thread.start();
-        return;
     }
     /*
     * 51/c/c00012.htm
