@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Settings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
+public class Settings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     static final ArrayList<String> Klassen = new ArrayList<>();
@@ -73,21 +73,14 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
         }
     }
 
-    @Override
-    public boolean onPreferenceClick(Preference preference) {
-        String key = preference.getKey();
+    public void onClick(View v) {
+        counter++;
 
-
-        if (key.equals("patat")) {
-            counter++;
-            if (counter > 5) {
-                System.out.println(">5");
-            }
-
-            System.out.println(counter);
-
+        if (counter > 6) {
+            Toast toastpoep = Toast.makeText(getApplicationContext(), "Yee", Toast.LENGTH_SHORT);
+            toastpoep.show();
         }
-        return true;
+
     }
 
 

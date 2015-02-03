@@ -24,7 +24,8 @@
     <PreferenceCategory
         android:summary="Info"
         android:title="Info">
-        <Preference android:layout="@layout/settings_message"
-            />
+        <Preference
+            android:layout="@layout/settings_message"
+            android:key="patat" />
     </PreferenceCategory>
 </PreferenceScreen>
