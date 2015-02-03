@@ -2,14 +2,18 @@ package nl.floro.roostereemland;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -32,6 +37,8 @@ import org.jsoup.select.Elements;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -64,7 +71,12 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getRoosterMededelingen();
+        if (isNetworkAvailable()) {
+            getRoosterMededelingen();
+        } else {
+            Toast geenInternet = Toast.makeText(getApplicationContext(), "U heeft geen verbinding met internet", Toast.LENGTH_LONG);
+            geenInternet.show();
+        }
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setLogo(R.drawable.ic_launcher);
@@ -86,7 +98,6 @@ public class MainActivity extends ActionBarActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-
 
 
         adView.loadAd(adRequest);
@@ -111,9 +122,13 @@ public class MainActivity extends ActionBarActivity {
                     partURL = "/c/c000";
                 }
 
-
-                webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + klasPositie + ".htm");
-                webView.setBackgroundColor(Color.TRANSPARENT);
+                if (isNetworkAvailable()) {
+                    webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + klasPositie + ".htm");
+                    webView.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    String HTML = " <html><body><h1>Geen internet gedetecteerd</h1></body</html>";
+                    webView.loadData(HTML, "", "UTF-8");
+                }
 
             }
 
@@ -141,9 +156,15 @@ public class MainActivity extends ActionBarActivity {
                 }
 
 
-                webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + docentPositie + ".htm");
-                webView.setBackgroundColor(Color.TRANSPARENT);
+                if (isNetworkAvailable()) {
 
+
+                    webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + docentPositie + ".htm");
+                    webView.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    String HTML = " <html><body><h1>Geen internet gedetecteerd</h1></body</html>";
+                    webView.loadData(HTML, "", "UTF-8");
+                }
             }
 
             @Override
@@ -167,6 +188,8 @@ public class MainActivity extends ActionBarActivity {
                     break;
             }
         }
+
+
     }
 
     public String getWeek() {
@@ -253,7 +276,6 @@ public class MainActivity extends ActionBarActivity {
                     c = all.toCharArray();
 
 
-
                     laatstGeupdate.setText("L" + all.substring(1));
 
                 }
@@ -262,8 +284,6 @@ public class MainActivity extends ActionBarActivity {
             }
 
         }
-
-
 
 
         );
@@ -331,7 +351,19 @@ public class MainActivity extends ActionBarActivity {
             }
             System.out.println("hij update nu toch?" + klas);
         }
+
+
     }
+
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+
 }
 
 
