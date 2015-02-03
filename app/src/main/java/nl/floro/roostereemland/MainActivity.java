@@ -254,6 +254,9 @@ public class MainActivity extends ActionBarActivity {
             startActivity(settingsIntent);
             return true;
         }
+        if (id == R.id.vernieuw) {
+            getRoosterMededelingen();
+        }
 
         return super.onOptionsItemSelected(item);
     }
