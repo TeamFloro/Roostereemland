@@ -217,7 +217,7 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                System.out.println(new String(responseBody));
+
             }
         });
 

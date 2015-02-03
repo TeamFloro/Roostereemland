@@ -5,10 +5,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,30 +22,20 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+        Preference patat = findPreference("patat");
+        patat.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                counter++;
+
+                if (counter > 6) {
+                    Toast toastpoep = Toast.makeText(getApplicationContext(), "Yee", Toast.LENGTH_SHORT);
+                    toastpoep.show();
+                }
+                return false;
+            }
+        });
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -72,15 +58,4 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
                 break;
         }
     }
-    public void onClick(View v) {
-        counter++;
-
-        if (counter > 6) {
-            Toast toastpoep = Toast.makeText(getApplicationContext(), "Yee", Toast.LENGTH_SHORT);
-            toastpoep.show();
-        }
-
-    }
-
-
 }
