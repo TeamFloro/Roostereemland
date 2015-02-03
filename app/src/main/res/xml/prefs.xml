@@ -24,6 +24,7 @@
     <PreferenceCategory
         android:summary="Info"
         android:title="Info">
-        <Preference android:layout="@layout/settings_message" />
+        <Preference android:layout="@layout/settings_message"
+            />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -25,9 +25,13 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
+import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -43,9 +47,11 @@ public class MainActivity extends ActionBarActivity {
     static final ArrayList<String> Klassen = new ArrayList<>();
     static final ArrayList<String> Docenten = new ArrayList<>();
     static final ArrayList<String> Lokalen = new ArrayList<>();
+
     static final Calendar kalender = new GregorianCalendar();
     private ProgressDialog progressBar;
     static String p;
+    static String all;
     SharedPreferences sharedPrefs;
     String lastUsed;
     String klas;
@@ -80,6 +86,8 @@ public class MainActivity extends ActionBarActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
+
+
 
         adView.loadAd(adRequest);
         webView.getSettings();
@@ -172,6 +180,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void getRoosterMededelingen() {
         final TextView mededelingen = (TextView) findViewById(R.id.textView1);
+        final TextView laatstGeupdate = (TextView) findViewById(R.id.textView);
         RoostereemlandApiClient.get("", false, null, new AsyncHttpResponseHandler() {
 
             @Override
@@ -203,18 +212,19 @@ public class MainActivity extends ActionBarActivity {
                 if (p.contains("Roosterwijzer")) {
                     char[] d;
                     d = p.toCharArray();
-                    System.out.println(d[0]);
 
                     for (int x = 0; x < d.length; x++) {
                         if (d[x] == 'R' && d[x + 1] == 'o' && d[x + 2] == 'o' && d[x + 3] == 's' && d[x + 4] == 't' && d[x + 5] == 'e' && d[x + 6] == 'r' && d[x + 7] == 'w' && d[x + 8] == 'i' && d[x + 9] == 'j' && d[x + 10] == 'z' && d[x + 11] == 'e' && d[x + 12] == 'r') {
                             p = p.substring(0, x);
                             mededelingen.setText(p);
                             mededelingen.setTextColor(0xffff0000);
+
+
                             break;
 
                         }
                     }
-                } else System.out.println("hoisdfdsf opent m noiit");
+                }
 
 
             }
@@ -225,6 +235,40 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Document doc = null;
+                try {
+                    doc = Jsoup.connect("http://www.roostereemland.nl/index.html").get();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Elements uze = doc.getElementsByAttribute("uze");
+                all = uze.text();
+
+                if (doc != null) {
+                    char[] c;
+                    c = all.toCharArray();
+
+
+
+                    laatstGeupdate.setText("L" + all.substring(1));
+
+                }
+
+
+            }
+
+        }
+
+
+
+
+        );
+
+        thread.start();
         return;
     }
     /*
