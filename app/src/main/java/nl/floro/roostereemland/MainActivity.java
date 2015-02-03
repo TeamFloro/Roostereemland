@@ -142,7 +142,7 @@ public class MainActivity extends ActionBarActivity {
                     webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + position + ".htm");
                     webView.setBackgroundColor(Color.TRANSPARENT);
                 } else {
-                    String HTML = " <html><body><h1>Geen internet gedetecteerd</h1></body</html>";
+                    String HTML = " <html><body><h1>Geen internet gedetecteerd </h1></body</html>";
                     webView.loadData(HTML, "", "UTF-8");
                 }
                 spinnerKlas.setSelection(0);
