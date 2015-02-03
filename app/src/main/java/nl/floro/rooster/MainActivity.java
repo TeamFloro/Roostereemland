@@ -1,4 +1,4 @@
-package nl.floro.roostereemland;
+package nl.floro.rooster;
 
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +33,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import nl.floro.roostereemland.api.RoostereemlandApiClient;
+import nl.floro.rooster.api.RoostereemlandApiClient;
 
 
 public class MainActivity extends ActionBarActivity {

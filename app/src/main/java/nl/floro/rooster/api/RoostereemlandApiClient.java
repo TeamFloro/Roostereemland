@@ -1,4 +1,4 @@
-package nl.floro.roostereemland.api;
+package nl.floro.rooster.api;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
