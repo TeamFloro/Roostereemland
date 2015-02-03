@@ -196,7 +196,6 @@ public class MainActivity extends ActionBarActivity {
         String week = kalender.get(Calendar.WEEK_OF_YEAR) + "";
         if (kalender.get(Calendar.WEEK_OF_YEAR) < 10) {
             week = String.format("%02d", kalender.get(Calendar.WEEK_OF_YEAR));
-
         }
         return week;
     }
@@ -275,7 +274,6 @@ public class MainActivity extends ActionBarActivity {
                     char[] c;
                     c = all.toCharArray();
 
-
                     laatstGeupdate.setText("L" + all.substring(1));
 
                 }
@@ -324,6 +322,12 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.vernieuw) {
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
