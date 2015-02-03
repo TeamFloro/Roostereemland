@@ -255,6 +255,7 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.vernieuw) {
+
             getRoosterMededelingen();
         }
 
@@ -283,7 +284,6 @@ public class MainActivity extends ActionBarActivity {
                     }
                     break;
             }
-            System.out.println("hij update nu toch?" + klas);
         }
 
 

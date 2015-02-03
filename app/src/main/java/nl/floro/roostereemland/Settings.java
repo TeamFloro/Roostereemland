@@ -1,10 +1,15 @@
 package nl.floro.roostereemland;
 
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.Image;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -16,6 +21,7 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
     static final ArrayList<String> Klassen = new ArrayList<>();
     static final ArrayList<String> Docenten = new ArrayList<>();
     int counter = 0;
+    boolean loaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,7 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
         addPreferencesFromResource(R.xml.prefs);
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
         Preference patat = findPreference("patat");
+
         patat.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -31,7 +38,12 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
                 if (counter > 6) {
                     Toast toastpoep = Toast.makeText(getApplicationContext(), "Yee", Toast.LENGTH_SHORT);
                     toastpoep.show();
+
+                    MediaPlayer.create(getApplicationContext(), R.raw.ja).start();
+
+
                 }
+
                 return false;
             }
         });

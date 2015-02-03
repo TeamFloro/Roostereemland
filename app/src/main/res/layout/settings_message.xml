@@ -11,4 +11,8 @@
         android:layout_margin="20px"
         android:text="@string/credits_text" />
 
+    <ImageView
+        android:layout_width="100px"
+        android:layout_height="100px" />
+
 </LinearLayout>
