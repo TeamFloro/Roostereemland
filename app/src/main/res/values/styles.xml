@@ -10,12 +10,14 @@
         <item name="android:textColorPrimary">#FFFF</item>
         <item name="android:textColorSecondary">#ff752801</item>
         <item name="windowActionBar">false</item>
+        <item name="logo">@drawable/ic_launcher</item>
+        <item name="displayOptions">useLogo|showHome</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>
         <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
 
     </style>
 
-    <style name="AppThemeSettings" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeSettings" parent="Theme.AppCompat.Light">
         <item name="android:windowNoTitle">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/gray</item>

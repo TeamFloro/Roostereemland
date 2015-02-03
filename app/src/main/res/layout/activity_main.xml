@@ -13,12 +13,16 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:id="@+id/imageView"
-        android:src="@drawable/logo"
-        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mededelingen:"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:editable="false"
+        android:textSize="15dp"
+        android:textColor="#000" />
 
     <TextView
         android:layout_width="match_parent"
@@ -26,9 +30,11 @@
         android:text="Mededelingen"
         android:id="@+id/textView1"
         android:gravity="center"
-        android:autoText="false"
-        android:phoneNumber="false"
-        android:textStyle="bold" />
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:focusable="false"
+        android:maxHeight="60dp"
+        android:textIsSelectable="true" />
 
 
     <RelativeLayout
@@ -42,13 +48,13 @@
             android:id="@+id/spinnerHolder">
 
             <Spinner
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_width="0dp"
                 android:layout_weight=".50"
                 android:id="@+id/spinner" />
 
             <Spinner
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_width="0dp"
                 android:layout_weight=".50"
                 android:id="@+id/spinner1" />

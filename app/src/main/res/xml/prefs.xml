@@ -3,27 +3,27 @@
 
     <PreferenceCategory
         android:summary="Standaard klas selector"
-        android:title="Klas info">
+        android:title="Instellen standaard klas/docent">
 
         <ListPreference
             android:entries="@array/klassenEntries"
             android:entryValues="@array/klassenValues"
             android:key="klas"
-            android:summary="Selecteer hier uw klas."
-            android:title="Klas" />
+            android:summary="Selecteer hier de klas waarvan u het dagrooster wilt zien bij het openen van de app"
+            android:title="Klassen" />
 
         <ListPreference
-            android:entries="@array/klassenEntries"
-            android:entryValues="@array/klassenValues"
-            android:key="klas"
-            android:summary="Selecteer hier uw klas."
-            android:title="Klas" />
+            android:entries="@array/docentenEntries"
+            android:entryValues="@array/docentenValues"
+            android:key="docent"
+            android:summary="Selecteer hier de docent waarvan u het dagrooster wilt zien bij het openen van de app"
+            android:title="Docenten" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:summary="Makers en extra info"
-        android:title="Makers en extra info">
+        android:summary="Info"
+        android:title="Info">
         <Preference android:layout="@layout/settings_message" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -1,9 +1,11 @@
 package nl.floro.roostereemland;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -59,6 +61,8 @@ public class MainActivity extends ActionBarActivity {
         getRoosterMededelingen();
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setLogo(R.drawable.ic_launcher);
+        toolbar.setSubtitle("voor alle leerlingen op HNE!");
         spinnerDocent = (Spinner) findViewById(R.id.spinner1);
         spinnerKlas = (Spinner) findViewById(R.id.spinner);
         final WebView webView = (WebView) findViewById(R.id.webView);
