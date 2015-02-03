@@ -1,11 +1,8 @@
 package nl.floro.roostereemland;
 
-import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -26,13 +23,11 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.apache.http.Header;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import nl.floro.roostereemland.api.RoostereemlandApiClient;
 
@@ -44,7 +39,6 @@ public class MainActivity extends ActionBarActivity {
     static final ArrayList<String> Docenten = new ArrayList<>();
     static final ArrayList<String> Lokalen = new ArrayList<>();
     static final Calendar kalender = new GregorianCalendar();
-    private ProgressDialog progressBar;
     static String p;
     SharedPreferences sharedPrefs;
     String lastUsed;
@@ -52,7 +46,6 @@ public class MainActivity extends ActionBarActivity {
     String docent;
     Spinner spinnerKlas;
     Spinner spinnerDocent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +70,7 @@ public class MainActivity extends ActionBarActivity {
         klas = sharedPrefs.getString("klas", null);
         docent = sharedPrefs.getString("docent", null);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        setSupportActionBar(toolbar);
 
         adView.loadAd(adRequest);
         webView.getSettings();
@@ -94,9 +85,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                int klasPositie = position;
                 String partURL = "/c/c0000";
-                if (klasPositie == 0) {
+                if (position == 0) {
                     return;
                 }
                 if (position >= 10) {
@@ -104,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
                 }
 
 
-                webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + klasPositie + ".htm");
+                webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + position + ".htm");
                 webView.setBackgroundColor(Color.TRANSPARENT);
 
             }
@@ -119,21 +109,20 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                int docentPositie = position;
                 String partURL = "/t/t0000";
-                if (docentPositie == 0) {
+                if (position == 0) {
                     return;
                 }
-                if (docentPositie >= 10) {
+                if (position >= 10) {
                     partURL = "/t/t000";
                 }
 
-                if (docentPositie >= 100) {
+                if (position >= 100) {
                     partURL = "/t/t00";
                 }
 
 
-                webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + docentPositie + ".htm");
+                webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + position + ".htm");
                 webView.setBackgroundColor(Color.TRANSPARENT);
 
             }
@@ -178,27 +167,6 @@ public class MainActivity extends ActionBarActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Element roosterDoc = Jsoup.parse(new String(responseBody)).body();
 
-                for (Node node : roosterDoc.childNodes()) {
-                    if (node.nodeName().equals("#comment")) {
-                        if (node.toString().trim().equals("<!-- EINDE OPMERKINGEN-->")) {
-                            System.out.println("hallo");
-                        }
-                        // Some output for testing ...
-                        System.out.println("=== Comment =======");
-                        System.out.println(node.toString().trim() + "faggot"); // 'toString().trim()' is only out beautify
-                        System.out.println("=== Childs ========");
-
-
-                        // Get the childs of the comment --> following nodes
-                        final List<Node> childNodes = node.siblingNodes();
-
-                        // Start- and endindex for the sublist - this is used to skip tags before the actual comment node
-                        final int startIdx = node.siblingIndex();   // Start index - start after (!) the comment node
-                        final int endIdx = childNodes.size();       // End index - the last following node
-                    }
-                    // if it's a comment we do something
-                }
-
                 p = roosterDoc.select("font[size=4]").text();
                 if (p.contains("Roosterwijzer")) {
                     char[] d;
@@ -209,7 +177,7 @@ public class MainActivity extends ActionBarActivity {
                         if (d[x] == 'R' && d[x + 1] == 'o' && d[x + 2] == 'o' && d[x + 3] == 's' && d[x + 4] == 't' && d[x + 5] == 'e' && d[x + 6] == 'r' && d[x + 7] == 'w' && d[x + 8] == 'i' && d[x + 9] == 'j' && d[x + 10] == 'z' && d[x + 11] == 'e' && d[x + 12] == 'r') {
                             p = p.substring(0, x);
                             mededelingen.setText(p);
-                            mededelingen.setTextColor(0xffff0000);
+                            mededelingen.setTextColor(Color.parseColor("#F44336"));
                             break;
 
                         }
@@ -224,20 +192,7 @@ public class MainActivity extends ActionBarActivity {
                 System.out.println(new String(responseBody));
             }
         });
-
-        return;
     }
-    /*
-    * 51/c/c00012.htm
-    * 51/c/c00002.htm
-    *
-    * Todo:
-    * Fix dat hij voor een klas onder de tien er een 0 voor zet en daarna niks. F: DONE
-    * Ik wil dit niet fixen met een slordige if else of een case... F: Jammer joh, DONE
-    */
-
-
-    // Leeg het layout omdat hij er anders steeds een view achter zet.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -290,9 +245,3 @@ public class MainActivity extends ActionBarActivity {
     }
 }
 
-
-/*
-* Todo:
-* - Settings
-* - Settings kleur van de menutext naar zwart veranderen
-* */

@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
@@ -15,26 +15,26 @@
 
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mededelingen:"
-        android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
         android:editable="false"
-        android:textSize="15dp"
-        android:textColor="#000" />
+        android:text="Mededelingen:"
+        android:textColor="#000"
+        android:textSize="14sp" />
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mededelingen"
-        android:id="@+id/textView1"
-        android:gravity="center"
-        android:textSize="13sp"
-        android:textStyle="bold"
         android:focusable="false"
+        android:gravity="center"
         android:maxHeight="60dp"
-        android:textIsSelectable="true" />
+        android:text="Mededelingen"
+        android:textIsSelectable="true"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
 
     <RelativeLayout
@@ -42,40 +42,40 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
+            android:id="@+id/spinnerHolder"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/spinnerHolder">
+            android:orientation="horizontal">
 
             <Spinner
-                android:layout_height="40dp"
+                android:id="@+id/spinner"
                 android:layout_width="0dp"
-                android:layout_weight=".50"
-                android:id="@+id/spinner" />
+                android:layout_height="40dp"
+                android:layout_weight=".50" />
 
             <Spinner
-                android:layout_height="40dp"
+                android:id="@+id/spinner1"
                 android:layout_width="0dp"
-                android:layout_weight=".50"
-                android:id="@+id/spinner1" />
+                android:layout_height="40dp"
+                android:layout_weight=".50" />
 
         </LinearLayout>
 
         <WebView
+            android:id="@+id/webView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/adView"
-            android:id="@+id/webView"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/spinnerHolder" />
 
         <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/adView"
             android:layout_alignParentBottom="true"
             ads:adSize="BANNER"
             ads:adUnitId="ca-app-pub-5014384952062886/7882191057" />
