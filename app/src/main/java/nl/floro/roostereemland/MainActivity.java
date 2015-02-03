@@ -166,7 +166,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Element roosterDoc = Jsoup.parse(new String(responseBody)).body();
-
+                // Eigenschappen, laatst gewijzigde kip:
+                // <font uze="2" face="Arial Unicode MS" color="#93678">
                 p = roosterDoc.select("font[size=4]").text();
                 if (p.contains("Roosterwijzer")) {
                     char[] d;
