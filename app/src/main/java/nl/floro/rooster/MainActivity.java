@@ -96,7 +96,9 @@ public class MainActivity extends ActionBarActivity {
         spinnerKlas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                int dag = kalender.get(Calendar.DAY_OF_WEEK);
+                int tijd = kalender.get(Calendar.HOUR_OF_DAY);
+                boolean naVrijdagMiddag = false;
                 String partURL = "/c/c0000";
                 if (position == 0) {
                     return;
@@ -105,6 +107,19 @@ public class MainActivity extends ActionBarActivity {
                     partURL = "/c/c000";
                 }
 
+
+                if (dag == 7 || dag == 8) {
+                    naVrijdagMiddag = true;
+                }
+
+                if (dag == 6 && tijd > 17) {
+                    naVrijdagMiddag = true;
+                }
+
+
+//                Als het na vrijdagmiddag 5 uur is, laadt dan het alternatieve 2e dagrooster (dagrooster2)
+//                if (!naVrijdagMiddag) {
+                System.out.println(dag + " " + tijd);
                 if (isNetworkAvailable()) {
                     webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + position + ".htm");
                     webView.setBackgroundColor(Color.TRANSPARENT);
@@ -112,6 +127,12 @@ public class MainActivity extends ActionBarActivity {
                     String HTML = " <html><body><h1>Geen internet gedetecteerd</h1></body</html>";
                     webView.loadData(HTML, "", "UTF-8");
                 }
+//                }
+//
+//                else {
+//
+//                }
+
                 spinnerDocent.setSelection(0);
             }
 
@@ -176,10 +197,13 @@ public class MainActivity extends ActionBarActivity {
 
     public String getWeek() {
         String week = kalender.get(Calendar.WEEK_OF_YEAR) + "";
+
         if (kalender.get(Calendar.WEEK_OF_YEAR) < 10) {
             week = String.format("%02d", kalender.get(Calendar.WEEK_OF_YEAR));
 
         }
+
+
         return week;
     }
 
