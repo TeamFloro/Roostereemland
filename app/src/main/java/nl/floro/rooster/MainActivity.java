@@ -46,22 +46,27 @@ public class MainActivity extends ActionBarActivity {
     static final Calendar kalender = new GregorianCalendar();
     static String p;
     static String all;
+    public Toast geenInternet;
     SharedPreferences sharedPrefs;
     String lastUsed;
     String klas;
     String docent;
     Spinner spinnerKlas;
     Spinner spinnerDocent;
+    private String partURL2;
+    private boolean naVrijdagMiddag = false;
+    private String week2;
+    private int dag = kalender.get(Calendar.DAY_OF_WEEK);
+    private int tijd = kalender.get(Calendar.HOUR_OF_DAY);
+    private String week = kalender.get(Calendar.WEEK_OF_YEAR) + "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        geenInternet = Toast.makeText(getApplicationContext(), "U heeft geen verbinding met internet", Toast.LENGTH_LONG);
         if (isNetworkAvailable()) {
             getRoosterMededelingen();
-        } else {
-            Toast geenInternet = Toast.makeText(getApplicationContext(), "U heeft geen verbinding met internet", Toast.LENGTH_LONG);
-            geenInternet.show();
         }
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -96,9 +101,7 @@ public class MainActivity extends ActionBarActivity {
         spinnerKlas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int dag = kalender.get(Calendar.DAY_OF_WEEK);
-                int tijd = kalender.get(Calendar.HOUR_OF_DAY);
-                boolean naVrijdagMiddag = false;
+
                 String partURL = "/c/c0000";
                 if (position == 0) {
                     return;
@@ -107,31 +110,43 @@ public class MainActivity extends ActionBarActivity {
                     partURL = "/c/c000";
                 }
 
-
-                if (dag == 7 || dag == 8) {
+                if (dag == 7 || dag == 1) {
                     naVrijdagMiddag = true;
+                    setWeek();
                 }
 
                 if (dag == 6 && tijd > 17) {
                     naVrijdagMiddag = true;
+                    setWeek();
+                }
+
+
+                if (!naVrijdagMiddag) {
+                    partURL2 = "dagrooster/";
+                } else {
+                    partURL2 = "2edagrooster/";
                 }
 
 
 //                Als het na vrijdagmiddag 5 uur is, laadt dan het alternatieve 2e dagrooster (dagrooster2)
-//                if (!naVrijdagMiddag) {
                 System.out.println(dag + " " + tijd);
                 if (isNetworkAvailable()) {
-                    webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + position + ".htm");
+                    if (!naVrijdagMiddag) {
+                        webView.loadUrl("http://www.roostereemland.nl/" + partURL2 + getWeek() + partURL + position + ".htm");
+                    } else {
+                        webView.loadUrl("http://www.roostereemland.nl/" + partURL2 + week2 + partURL + position + ".htm");
+                    }
+
+
                     webView.setBackgroundColor(Color.TRANSPARENT);
                 } else {
-                    String HTML = " <html><body><h1>Geen internet gedetecteerd</h1></body</html>";
+                    String HTML = " <html><body><h1>Geen internet gedetecteerd</h1></body></html>";
                     webView.loadData(HTML, "", "UTF-8");
+                    geenInternet = Toast.makeText(getApplicationContext(), "U heeft geen verbinding met internet", Toast.LENGTH_SHORT);
+                    geenInternet.show();
+
                 }
-//                }
-//
-//                else {
-//
-//                }
+
 
                 spinnerDocent.setSelection(0);
             }
@@ -158,13 +173,36 @@ public class MainActivity extends ActionBarActivity {
                     partURL = "/t/t00";
                 }
 
+                if (dag == 7 || dag == 1) {
+                    naVrijdagMiddag = true;
+                    setWeek();
+                }
+
+                if (dag == 6 && tijd > 17) {
+                    naVrijdagMiddag = true;
+                    setWeek();
+                }
+
+                if (!naVrijdagMiddag) {
+                    partURL2 = "dagrooster/";
+                } else {
+                    partURL2 = "2edagrooster/";
+                }
 
                 if (isNetworkAvailable()) {
-                    webView.loadUrl("http://www.roostereemland.nl/dagrooster/" + getWeek() + partURL + position + ".htm");
+                    if (!naVrijdagMiddag) {
+                        webView.loadUrl("http://www.roostereemland.nl/" + partURL2 + getWeek() + partURL + position + ".htm");
+                    } else {
+                        webView.loadUrl("http://www.roostereemland.nl/" + partURL2 + week2 + partURL + position + ".htm");
+
+                    }
+
                     webView.setBackgroundColor(Color.TRANSPARENT);
                 } else {
-                    String HTML = " <html><body><h1>Geen internet gedetecteerd </h1></body</html>";
+                    String HTML = " <html><body><h1>Geen internet gedetecteerd </h1></body></html>";
                     webView.loadData(HTML, "", "UTF-8");
+                    geenInternet = Toast.makeText(getApplicationContext(), "U heeft geen verbinding met internet", Toast.LENGTH_SHORT);
+                    geenInternet.show();
                 }
                 spinnerKlas.setSelection(0);
             }
@@ -196,7 +234,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public String getWeek() {
-        String week = kalender.get(Calendar.WEEK_OF_YEAR) + "";
 
         if (kalender.get(Calendar.WEEK_OF_YEAR) < 10) {
             week = String.format("%02d", kalender.get(Calendar.WEEK_OF_YEAR));
@@ -205,6 +242,18 @@ public class MainActivity extends ActionBarActivity {
 
 
         return week;
+    }
+
+    public void setWeek() {
+
+
+        week2 = (Integer.parseInt(week) + 1) + "";
+
+        if (kalender.get(Calendar.WEEK_OF_YEAR) < 10) {
+            week2 = String.format("%02d", Integer.parseInt(week2));
+
+        }
+
     }
 
     public void getRoosterMededelingen() {
@@ -218,6 +267,9 @@ public class MainActivity extends ActionBarActivity {
                 all = roosterDoc.getElementsByAttribute("uze").text();
                 p = roosterDoc.select("font[size=4]").text();
                 laatstGeupdate.setText("L" + all.substring(1));
+                if (p == null) {
+                    geenInternet.show();
+                }
 
                 if (p.contains("Roosterwijzer")) {
                     char[] d;
@@ -241,7 +293,9 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                Toast t;
+                t = Toast.makeText(getApplicationContext(), "Mededelingen ophalen mislukt.", Toast.LENGTH_SHORT);
+                t.show();
             }
         });
 
